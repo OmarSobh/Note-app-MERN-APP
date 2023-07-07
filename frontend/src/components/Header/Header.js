@@ -1,16 +1,19 @@
-import React from 'react'
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Header = () => {
+  const navigate = useNavigate();
+
   return (
-      <Navbar expand="lg" className="bg-body-tertiary">
-      <Container >
-        <Navbar.Brand href="/">Adasha Mekomet</Navbar.Brand>
+    <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Brand as={Link} to="/">Adasha Mekomet</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -18,7 +21,7 @@ export const Header = () => {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="/mynotes">Notes</Nav.Link>
+            <Nav.Link as={Link} to="/mynotes">Notes</Nav.Link>
             <NavDropdown title="Profile" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
@@ -29,8 +32,11 @@ export const Header = () => {
                 Something else here
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="#" disabled>
-              Link
+            <Nav.Link onClick={() => {
+              localStorage.removeItem("userInfo");
+              navigate('/');
+            }}>
+              Logout
             </Nav.Link>
           </Nav>
           <Form className="d-flex">

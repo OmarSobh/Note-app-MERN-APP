@@ -16,7 +16,7 @@ export const App = () => {
       <Routes>
         <Route path='/' Component={LandingPage} exact/>
         <Route path='/login' Component={LoginScreen} exact/>
-        <Route path='/register' Component={RegisterScreen} exact/>
+        <Route path='/register' Component={RegisterScreen} />
         <Route  path='/mynotes' Component={MyNotes}/>
       </Routes>
 
