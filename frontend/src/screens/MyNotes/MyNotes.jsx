@@ -20,9 +20,9 @@ const MyNotes = () => {
             
       }
       console.log(notes)
-      useEffect(() => {
-            fechNodes();
-      }, [])
+      // useEffect(() => {
+      //       fechNodes();
+      // }, [])
 
       return (
             <div className=''>

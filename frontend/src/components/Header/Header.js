@@ -5,10 +5,20 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { logout } from '../../actions/userActions';
 
 export const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin;
+
+  const logoutHandler=()=>{
+    dispatch(logout());
+    navigate('/');
+  }
 
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
@@ -32,10 +42,7 @@ export const Header = () => {
                 Something else here
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link onClick={() => {
-              localStorage.removeItem("userInfo");
-              navigate('/');
-            }}>
+            <Nav.Link onClick={logoutHandler}>
               Logout
             </Nav.Link>
           </Nav>
