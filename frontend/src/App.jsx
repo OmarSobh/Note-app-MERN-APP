@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react'
+import React, { useState } from 'react'
 import { Header } from './components/Header/Header';
 import { Footer } from './components/Footer/Footer';
 import { LandingPage } from './screens/LandingPage/LandingPage.jsx';
@@ -7,17 +7,24 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MyNotes from './screens/MyNotes/MyNotes';
 import LoginScreen from './screens/LoginPage/LoginScreen';
 import RegisterScreen from './screens/Register/RegisterScreen';
+import CreateNote from './screens/CreateNote/CreateNote';
+import SingleNote from './screens/CreateNote/SingleNote';
 export const App = () => {
+  const [search,setSearch]=useState("");
+  console.log(search)
   return (
     <BrowserRouter>
 
-      <Header></Header>
+      <Header setSearch={setSearch}></Header>
 
       <Routes>
         <Route path='/' Component={LandingPage} exact/>
-        <Route path='/login' Component={LoginScreen} exact/>
+        <Route path='/login' Component={LoginScreen} />
         <Route path='/register' Component={RegisterScreen} />
-        <Route  path='/mynotes' Component={MyNotes} exact/>
+        <Route  path='/mynotes' Component={()=><MyNotes search={search}/>} />
+        <Route  path='/note/:id' Component={SingleNote} />
+        <Route  path='/createnote' Component={CreateNote} />
+
       </Routes>
 
       <Footer></Footer>
