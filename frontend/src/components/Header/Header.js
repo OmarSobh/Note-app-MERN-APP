@@ -8,6 +8,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../actions/userActions';
+import { NavbarBrand } from 'react-bootstrap';
 
 export const Header = ({ setSearch }) => {
   const navigate = useNavigate();
@@ -23,7 +24,8 @@ export const Header = ({ setSearch }) => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand as={Link} to="/">Adasha Mekomet</Navbar.Brand>
+        <NavbarBrand as={Link} to="/"><img src="https://media.easy.co.il/images/UserThumbs/10068364_1598730775197.png" style={{width:45}} alt="Image" /></NavbarBrand>
+        <Navbar.Brand as={Link} to="/"  className='text-uppercase mb-0'>Adasha Mekomet</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
 
         <Navbar.Collapse id="navbarScroll" className='justify-content-end'>

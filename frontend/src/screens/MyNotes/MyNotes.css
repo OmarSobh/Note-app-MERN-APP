@@ -1,8 +1,6 @@
 
-    .main {
-      min-height: 93vh;
-      display: flex;
-      align-items: center;
+.Main1 {
+      
       background-image: url("https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg");
   background-size: cover;
   -webkit-animation: slidein 100s;
@@ -28,27 +26,7 @@
   }
 }
 
-    .title {
-      font-size: 95px;
-    }
-    .subtitle {
-      font-size: 25px;
-      padding-top: 10px;
-    }
-    .intro-text {
-      width: 100%;
-      text-align: center;
-    }
-    .buttonContainer {
-      margin-top: 50px;
-      display: flex;
-      justify-content: space-evenly;
-    }
     
-    .landingbutton {
-      width: 200px;
-      height: 55px;
-    }
     
     @media only screen and (min-width: 1200px) {
       .buttonContainer {

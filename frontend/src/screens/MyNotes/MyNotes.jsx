@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteNoteAction, listNotes } from '../../actions/notesAction';
 import Loading from "../../components/Loading"
 import ErrorMessage from "../../components/ErrorMessage"
+import "./MyNotes.css"
 
-
-const MyNotes = ({search}) => {
+const MyNotes = ({ search }) => {
 
       const navigate = useNavigate();
       const dispatch = useDispatch();
@@ -37,16 +37,19 @@ const MyNotes = ({search}) => {
       console.log(notes)
 
       useEffect(() => {
+            // setTimeout(()=>{
             dispatch(listNotes());
-            if (!userInfo) {
-                  navigate("/");
-            }
+            console.log('userInfo', userInfo)
+            // if (!userInfo) {
+            //       navigate("/");
+            // }
+            // },1000*6)
       }, [dispatch, sucssesCreate, navigate, userInfo, sucssesUpdate, sucssesDelete,]);
 
       return (
-            <div className=''>
+            <div className='Main1'>
 
-                  <MainScreen title={`Welcome back ${userInfo.name}...`} >
+                  <MainScreen title={`Welcome back ${userInfo?.name}...`} >
                         <Link to="/createnote">
                               <Button style={{ marginLeft: 10, marginBottom: 6 }}>Create New Note</Button>
                         </Link>
@@ -63,7 +66,7 @@ const MyNotes = ({search}) => {
 
 
 
-                              <Card key={note._id}>
+                              <Card key={note._id} style={{marginBottom:20}}>
                                     <Card.Header style={{ display: "flex" }}>
                                           <span style={{
                                                 color: "black",
