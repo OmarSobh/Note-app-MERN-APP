@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../actions/userActions';
 import { NavbarBrand } from 'react-bootstrap';
+import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
 
 export const Header = ({ setSearch }) => {
   const navigate = useNavigate();
@@ -29,36 +30,40 @@ export const Header = ({ setSearch }) => {
         <Navbar.Toggle aria-controls="navbarScroll" />
 
         <Navbar.Collapse id="navbarScroll" className='justify-content-end'>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
-            <Nav.Link as={Link} to="/mynotes">Notes</Nav.Link>
-            <NavDropdown title={`${userInfo?.name}Profile`} id="navbarScrollingDropdown" >
-              <NavDropdown.Item href="/profile">{userInfo?.name} Profile</NavDropdown.Item>
-              
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                <Nav.Link onClick={logoutHandler}>
-                  Logout
-                </Nav.Link>
-              </NavDropdown.Item>
-            </NavDropdown>
+  {userInfo ? ( // Check if userInfo exists
+    <>
+      <Form className="d-flex">
+        <Form.Control
+          type="search"
+          placeholder="Search"
+          className="me-2"
+          aria-label="Search"
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Button variant="outline-success">Search</Button>
+      </Form>
+      <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
+        <Nav.Link as={Link} to="/mynotes">
+          Notes
+        </Nav.Link>
+        <NavDropdown title={`${userInfo?.name} Profile`} id="navbarScrollingDropdown">
+          <NavDropdown.Item href="/profile">{userInfo?.name} Profile</NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item href="#action5">
+            <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
+          </NavDropdown.Item>
+        </NavDropdown>
+      </Nav>
+    </>
+  ) :
+  <NavbarCollapse id="navbarScroll" className='justify-content-end '  >
+     <Button style={{margin:15}} variant=" btn btn-outline-primary ">Sign Up</Button>
+     <Button style={{margin:15}} variant="btn btn-outline-primary ">Login</Button>
+  </NavbarCollapse>
+  
 
-          </Nav>
-
-        </Navbar.Collapse>
+   }
+</Navbar.Collapse>
       </Container>
     </Navbar>
   );
