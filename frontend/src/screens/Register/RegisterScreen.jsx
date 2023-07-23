@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
@@ -8,67 +8,109 @@ import { MainScreen } from "../../components/MainScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/userActions";
 
-function RegisterScreen({history}) {
+function RegisterScreen({ history }) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pic, setPic] = useState(
     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
   );
   const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
   const dispatch = useDispatch();
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
+  const navigate = useNavigate();
 
   const postDetails = (pics) => {
     if (
-      pics === "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-    ) 
-    {
+      pics ===
+      "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+    ) {
       return setPicMessage("Please Select an Image");
     }
     setPicMessage(null);
-    // if (pics.type === "image/jpeg" || pics.type === "image/png") {
-    //   const data = new FormData();
-    //   data.append("file", pics);
-    //   data.append("upload_preset", "adashaMekomet");
-    //   data.append("cloud_name", "dfwl3qyt7");
-    //   fetch("https://api.cloudinary.com/v1_1/dfwl3qyt7/image/upload", {
-    //     method: "post",
-    //     body: data,
-    //   })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       setPic(data.url.toString());
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // } else {
-    //   return setPicMessage("Please Select an Image");
-    // }
+    // ... Cloudinary upload code here (uncomment if required)
   };
-const nav=useNavigate();
 
+  const isPasswordValid = (password) => {
+    const lowercaseRegex = /[a-z]/;
+    const uppercaseRegex = /[A-Z]/;
+    const numberRegex = /[0-9]/;
+    const symbolRegex = /[!@#$%^&*()_+{}[\]:;<>,.?~]/;
+
+    return (
+      lowercaseRegex.test(password) &&
+      uppercaseRegex.test(password) &&
+      numberRegex.test(password) &&
+      symbolRegex.test(password)
+    );
+  };
+
+  const validateForm = () => {
+    // Validate name, email, password, and confirmPassword here
+    // Set appropriate error messages using setMessage
+
+    if (!name.trim()) {
+      setMessage("Name is required");
+      return false;
+    }
+
+    if (name.length < 3 || name.length > 50) {
+      setMessage("Name should be between 3 and 50 characters");
+      return false;
+    }
+
+    if (!email.trim()) {
+      setMessage("Email is required");
+      return false;
+    }
+
+    if (!emailIsValid(email)) {
+      setMessage("Invalid email format");
+      return false;
+    }
+
+    if (!password.trim()) {
+      setMessage("Password is required");
+      return false;
+    }
+
+    if (password.length < 6) {
+      setMessage("Password should be at least 6 characters");
+      return false;
+    }
+
+    if (!isPasswordValid(password)) {
+      setMessage(
+        "Password must contain at least one lowercase letter, one uppercase letter, one number, and one symbol"
+      );
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      setMessage("Passwords do not match");
+      return false;
+    }
+
+    return true;
+  };
+
+  const emailIsValid = (email) => {
+    // Basic email format validation
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (password !== confirmpassword) {
-      setMessage("Passwords do not match");
-    } else
-    {
+
+    if (validateForm()) {
       dispatch(register(name, email, password, pic));
-      nav('/mynotes')
-    } 
-      
-
-
-  }
-
-
-
+      navigate("/mynotes");
+    }
+  };
 
   return (
     <MainScreen title="REGISTER">
@@ -76,11 +118,11 @@ const nav=useNavigate();
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
         {loading && <Loading />}
-        <Form onSubmit={submitHandler} >
+        <Form onSubmit={submitHandler}>
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
-              type="name"
+              type="text"
               value={name}
               placeholder="Enter name"
               onChange={(e) => setName(e.target.value)}
@@ -111,7 +153,7 @@ const nav=useNavigate();
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               type="password"
-              value={confirmpassword}
+              value={confirmPassword}
               placeholder="Confirm Password"
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
@@ -120,6 +162,7 @@ const nav=useNavigate();
           {picMessage && (
             <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
           )}
+
           <Form.Group controlId="pic">
             <Form.Label>Profile Picture</Form.Label>
             <Form.Control
@@ -135,9 +178,10 @@ const nav=useNavigate();
             Register
           </Button>
         </Form>
+
         <Row className="py-3">
           <Col>
-            Have an Account ? <Link to="/login">Login</Link>
+            Have an Account? <Link to="/login">Login</Link>
           </Col>
         </Row>
       </div>
