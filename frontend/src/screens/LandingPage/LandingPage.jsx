@@ -9,8 +9,10 @@ export const LandingPage = () => {
         <Row>
           <div className="intro-text">
             <div>
-              <h1 className="title">Welcome to Adasha Mekomet Notes App</h1>
-              <p className="subtitle">One Safe place for all your notes.</p>
+              <h1 className="title">Welcome to Adasha Mekomet Notes </h1>
+              <p className="subtitle">
+                One Safe place for all your work notes.
+              </p>
             </div>
             <div className="buttonContainer">
               <a href="/login">
